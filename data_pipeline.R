@@ -1,3 +1,6 @@
+library(tidyverse)
+library(rvest) 
+
 download_retrosheet <- function(season) {
   # get zip file from retrosheet website
   download.file(
@@ -61,6 +64,19 @@ cleanup <- function() {
   )
   unlink(zips)
 }
+
+retrieve_fields <- function() {
+  # Read the HTML content of the website 
+  webpage <- read_html("https://chadwick.readthedocs.io/en/latest/cwevent.html") 
+  # Select the table using CSS selector 
+  table_node <- html_nodes(webpage, "table") 
+  # Extract the table content 
+  table_content <- html_table(table_node)[[1]] 
+  # write  the table 
+  write.table(table_content,"retrosheet/unzipped/fields.csv", sep = ",", row.names= FALSE)
+}
+
+
 
 parse_retrosheet_pbp <- function(season) {
   download_retrosheet(season)
