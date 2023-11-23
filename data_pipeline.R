@@ -43,7 +43,7 @@ create_csv_roster <- function(season) {
   rosters %>%
     map_df(read_csv,
            col_names = c("PlayerID", "LastName", "FirstName",
-                         "Bats", "Pitches", "Team")) %>%
+                         "Bats", "Pitches", "Team","FieldingPosition")) %>%
     write_csv(path = file.path("retrosheet","unzipped",
                                paste0("roster", season, ".csv")))
 }
